@@ -1,0 +1,216 @@
+# depslib dependency file v1.0
+1477392595 source:d:\uzhlyandian-wars\basic_classes.cpp
+	"all_includes.h"
+	"basic_classes.h"
+	"global_vars.h"
+	"generals.h"
+
+1477382770 d:\uzhlyandian-wars\all_includes.h
+	<GL/glut.h>
+	<IL/ilut.h>
+	<bits/stdc++.h>
+	"global_vars.h"
+
+1477424221 d:\uzhlyandian-wars\global_vars.h
+	"all_includes.h"
+	"Button.h"
+	"basic_classes.h"
+
+1477134943 d:\uzhlyandian-wars\button.h
+	<IL/ilut.h>
+	<GL/glut.h>
+
+1477392595 d:\uzhlyandian-wars\basic_classes.h
+	"all_includes.h"
+
+1476052112 d:\uzhlyandian-wars\generals.h
+	"all_includes.h"
+	"basic_classes.h"
+	"global_vars.h"
+
+1477339665 source:d:\uzhlyandian-wars\button.cpp
+	"Button.h"
+	"all_includes.h"
+
+1477429556 source:d:\uzhlyandian-wars\controller.cpp
+	"controller.h"
+	"loading_game.h"
+	"intellect.h"
+	"drawing.h"
+	"end_game.h"
+	"hard_intellect.h"
+
+1477325533 d:\uzhlyandian-wars\controller.h
+	"all_includes.h"
+	"basic_classes.h"
+
+1477396303 d:\uzhlyandian-wars\loading_game.h
+	"all_includes.h"
+	"basic_classes.h"
+	"global_vars.h"
+
+1477392670 d:\uzhlyandian-wars\intellect.h
+	"all_includes.h"
+	"basic_classes.h"
+	"global_vars.h"
+	"loading_game.h"
+	"controller.h"
+
+1477309626 d:\uzhlyandian-wars\drawing.h
+	"textures.h"
+	"basic_classes.h"
+
+1477309626 d:\uzhlyandian-wars\textures.h
+	"all_includes.h"
+	"basic_classes.h"
+
+1477309626 d:\uzhlyandian-wars\end_game.h
+	"all_includes.h"
+
+1477353638 d:\uzhlyandian-wars\hard_intellect.h
+	"global_vars.h"
+
+1477441255 source:d:\uzhlyandian-wars\draw_menu.cpp
+	"draw_menu.h"
+	"menu_mouse.h"
+	"drawing.h"
+
+1477298540 d:\uzhlyandian-wars\draw_menu.h
+	"textures.h"
+	"all_includes.h"
+	"Button.h"
+
+1477298540 d:\uzhlyandian-wars\menu_mouse.h
+	"all_includes.h"
+
+1477385708 source:d:\uzhlyandian-wars\drawing.cpp
+	"drawing.h"
+	"draw_menu.h"
+	"end_game.h"
+	"pause_menu.h"
+	"loading_game.h"
+
+1476224486 d:\uzhlyandian-wars\pause_menu.h
+	"all_includes.h"
+
+1477385708 source:d:\uzhlyandian-wars\end_game.cpp
+	"end_game.h"
+	"global_vars.h"
+	"Button.h"
+	"textures.h"
+	"draw_menu.h"
+	"loading_game.h"
+	"hard_intellect.h"
+
+1477439870 source:d:\uzhlyandian-wars\generals.cpp
+	"generals.h"
+	"global_vars.h"
+	"loading_game.h"
+	"Levels_intellect.h"
+	"hard_intellect.h"
+
+1477320329 d:\uzhlyandian-wars\levels_intellect.h
+	"all_includes.h"
+	"drawing.h"
+	"textures.h"
+	"basic_classes.h"
+	"loading_game.h"
+	"menu_mouse.h"
+	"draw_menu.h"
+	"Button.h"
+	"controller.h"
+	"intellect.h"
+	"map_generator.h"
+	"end_game.h"
+
+1477249984 d:\uzhlyandian-wars\map_generator.h
+	"all_includes.h"
+	"basic_classes.h"
+
+1477377840 source:d:\uzhlyandian-wars\glut.rc
+
+1477441590 source:d:\uzhlyandian-wars\hard_intellect.cpp
+	"hard_intellect.h"
+	"intellect.h"
+
+1477396361 source:d:\uzhlyandian-wars\intellect.cpp
+	"intellect.h"
+	"Levels_intellect.h"
+	"generals.h"
+	"drawing.h"
+	"end_game.h"
+	"basic_classes.h"
+
+1477440762 source:d:\uzhlyandian-wars\levels_intellect.cpp
+	"Levels_intellect.h"
+	"hard_intellect.h"
+
+1477438647 source:d:\uzhlyandian-wars\loading_game.cpp
+	"loading_game.h"
+	"global_vars.h"
+	"drawing.h"
+	"controller.h"
+	"basic_classes.h"
+	"intellect.h"
+	"draw_menu.h"
+	"Levels_intellect.h"
+
+1477434657 source:d:\uzhlyandian-wars\main.cpp
+	"all_includes.h"
+	"drawing.h"
+	"textures.h"
+	"basic_classes.h"
+	"loading_game.h"
+	"menu_mouse.h"
+	"draw_menu.h"
+	"Button.h"
+	"controller.h"
+	"intellect.h"
+	"map_generator.h"
+	"save_game.h"
+	"generals.h"
+	"end_game.h"
+	"pause_menu.h"
+	"Levels_intellect.h"
+
+1476038171 d:\uzhlyandian-wars\save_game.h
+	"all_includes.h"
+	"basic_classes.h"
+
+1477339666 source:d:\uzhlyandian-wars\map_generator.cpp
+	"map_generator.h"
+	"loading_game.h"
+	"global_vars.h"
+
+1477393866 source:d:\uzhlyandian-wars\menu_mouse.cpp
+	"menu_mouse.h"
+	"textures.h"
+	"save_game.h"
+	"drawing.h"
+	"save_game.h"
+	"draw_menu.h"
+	"map_generator.h"
+	"end_game.h"
+	"loading_game.h"
+
+1477339666 source:d:\uzhlyandian-wars\pause_menu.cpp
+	"pause_menu.h"
+	"global_vars.h"
+	"draw_menu.h"
+	"Button.h"
+	"loading_game.h"
+	"save_game.h"
+	"menu_mouse.h"
+	"hard_intellect.h"
+
+1477320701 source:d:\uzhlyandian-wars\save_game.cpp
+	"save_game.h"
+	"loading_game.h"
+	"global_vars.h"
+	"textures.h"
+	"save_game.h"
+
+1477392865 source:d:\uzhlyandian-wars\textures.cpp
+	"textures.h"
+	"basic_classes.h"
+

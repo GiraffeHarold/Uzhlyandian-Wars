@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Project" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Project" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="glut32" />
+					<Add library="glu32" />
+					<Add library="opengl32" />
+					<Add library="DevIL/lib/DevIL.lib" />
+					<Add library="DevIL/lib/ILU.lib" />
+					<Add library="DevIL/lib/ILUT.lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Project" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-O2" />
+			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+		</Compiler>
+		<Linker>
+			<Add library="glut32" />
+			<Add library="glu32" />
+			<Add library="opengl32" />
+			<Add library="DevIL/lib/DevIL.lib" />
+			<Add library="DevIL/lib/ILU.lib" />
+			<Add library="DevIL/lib/ILUT.lib" />
+		</Linker>
+		<Unit filename="Button.cpp" />
+		<Unit filename="Button.h" />
+		<Unit filename="Levels_intellect.cpp" />
+		<Unit filename="Levels_intellect.h" />
+		<Unit filename="all_includes.h" />
+		<Unit filename="basic_classes.cpp" />
+		<Unit filename="basic_classes.h" />
+		<Unit filename="controller.cpp" />
+		<Unit filename="controller.h" />
+		<Unit filename="draw_menu.cpp" />
+		<Unit filename="draw_menu.h" />
+		<Unit filename="drawing.cpp" />
+		<Unit filename="drawing.h" />
+		<Unit filename="end_game.cpp" />
+		<Unit filename="end_game.h" />
+		<Unit filename="generals.cpp" />
+		<Unit filename="generals.h" />
+		<Unit filename="global_vars.h" />
+		<Unit filename="glut.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="hard_intellect.cpp" />
+		<Unit filename="hard_intellect.h" />
+		<Unit filename="intellect.cpp" />
+		<Unit filename="intellect.h" />
+		<Unit filename="loading_game.cpp" />
+		<Unit filename="loading_game.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="map_generator.cpp" />
+		<Unit filename="map_generator.h" />
+		<Unit filename="menu_mouse.cpp" />
+		<Unit filename="menu_mouse.h" />
+		<Unit filename="pause_menu.cpp" />
+		<Unit filename="pause_menu.h" />
+		<Unit filename="save_game.cpp" />
+		<Unit filename="save_game.h" />
+		<Unit filename="textures.cpp" />
+		<Unit filename="textures.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
