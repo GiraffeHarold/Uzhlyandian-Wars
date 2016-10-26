@@ -32,7 +32,7 @@
 	"Button.h"
 	"all_includes.h"
 
-1477429556 source:d:\uzhlyandian-wars\controller.cpp
+1477479176 source:d:\uzhlyandian-wars\controller.cpp
 	"controller.h"
 	"loading_game.h"
 	"intellect.h"
@@ -40,7 +40,7 @@
 	"end_game.h"
 	"hard_intellect.h"
 
-1477325533 d:\uzhlyandian-wars\controller.h
+1477479199 d:\uzhlyandian-wars\controller.h
 	"all_includes.h"
 	"basic_classes.h"
 
@@ -49,7 +49,7 @@
 	"basic_classes.h"
 	"global_vars.h"
 
-1477392670 d:\uzhlyandian-wars\intellect.h
+1477478755 d:\uzhlyandian-wars\intellect.h
 	"all_includes.h"
 	"basic_classes.h"
 	"global_vars.h"
@@ -102,7 +102,7 @@
 	"loading_game.h"
 	"hard_intellect.h"
 
-1477439870 source:d:\uzhlyandian-wars\generals.cpp
+1477476679 source:d:\uzhlyandian-wars\generals.cpp
 	"generals.h"
 	"global_vars.h"
 	"loading_game.h"
@@ -129,11 +129,11 @@
 
 1477377840 source:d:\uzhlyandian-wars\glut.rc
 
-1477441590 source:d:\uzhlyandian-wars\hard_intellect.cpp
+1477476584 source:d:\uzhlyandian-wars\hard_intellect.cpp
 	"hard_intellect.h"
 	"intellect.h"
 
-1477396361 source:d:\uzhlyandian-wars\intellect.cpp
+1477478901 source:d:\uzhlyandian-wars\intellect.cpp
 	"intellect.h"
 	"Levels_intellect.h"
 	"generals.h"
@@ -145,7 +145,7 @@
 	"Levels_intellect.h"
 	"hard_intellect.h"
 
-1477438647 source:d:\uzhlyandian-wars\loading_game.cpp
+1477479265 source:d:\uzhlyandian-wars\loading_game.cpp
 	"loading_game.h"
 	"global_vars.h"
 	"drawing.h"

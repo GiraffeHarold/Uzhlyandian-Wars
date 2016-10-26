@@ -15,6 +15,7 @@
     void mouse_gen(int, int);
     void control_general(int);
     void general_move(pii);
+    void general_move_from_file(pii);
     pii get(ld, ld, vector<vector<Cell> >&);
 
 #endif // CONTROLLER_H_INCLUDED

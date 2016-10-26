@@ -303,14 +303,12 @@ bool do_third_regime_turn(int color)
 
 }
 
-
-
-void do_intellectual_move_with_general(int color)
+bool do_intellectual_move_with_general(int color)
 {
     bool p;
     if (difficulty == HARD) p = goodThird(color);
     else p = do_third_regime_turn(color);
-//    cerr << p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
+    cout << p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
     if (!p)
     {
         log_generals(cur_turn%2);
@@ -322,7 +320,7 @@ void do_intellectual_move_with_general(int color)
                     display_field(Hexes);
                     surrender();
                     cur_turn = 2 * Turns;
-                    return;
+                    return 1;
                 }
             }
 
@@ -337,7 +335,7 @@ void do_intellectual_move_with_general(int color)
         general_chosen = NULL;
         set_fort_now = 0;
         clear_shining();
-        return;
+        return 1;
     }
     general_chosen = cur_third_turn.general;
     general_chosen -> clicked();
@@ -345,6 +343,51 @@ void do_intellectual_move_with_general(int color)
     set_fort_now = cur_third_turn.must_set_a_fort;
     if (set_fort_now)
         general_chosen = cur_third_turn.general;
+    return 0;
+}
+
+
+bool do_intellectual_move_with_general_from_file(int color)
+{
+    bool p;
+    if (difficulty == HARD) p = goodThird(color);
+    else p = do_third_regime_turn(color);
+    cout << p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
+    if (!p)
+    {
+        log_generals(cur_turn%2);
+        for (int i=0; i<N; i++)
+            for (int j=0; j<M; j++)
+            {
+                if (Hexes[i][j].town != NULL && Hexes[i][j].general != NULL)
+                {
+                    display_field(Hexes);
+                    surrender();
+                    cur_turn = 2 * Turns;
+                    return 1;
+                }
+            }
+
+        cur_turn++;
+        if (cur_turn != Turns*2)
+        {
+            Hexes[town[cur_turn%2] -> x][town[cur_turn%2] -> y].general = new General(cur_turn/2 + 1, *town[cur_turn%2]);
+            player_general[cur_turn%2].insert(Hexes[town[cur_turn%2] -> x][town[cur_turn%2] -> y].general);
+            what_general[cur_turn%2][cur_turn/2] = Hexes[town[cur_turn%2] -> x][town[cur_turn%2] -> y].general;
+        }
+        renew_turns();
+        general_chosen = NULL;
+        set_fort_now = 0;
+        clear_shining();
+        return 1;
+    }
+    general_chosen = cur_third_turn.general;
+    general_chosen -> clicked();
+    general_move_from_file(mp(cur_third_turn.x, cur_third_turn.y));
+    set_fort_now = cur_third_turn.must_set_a_fort;
+    if (set_fort_now)
+        general_chosen = cur_third_turn.general;
+    return 0;
 }
 
 // FINISH

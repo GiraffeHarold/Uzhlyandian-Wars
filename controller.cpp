@@ -330,6 +330,43 @@ void general_move(pair <int, int> where)
     }
 }
 
+void general_move_from_file(pair <int, int> where)
+{
+    if (where.fi == -1)
+    {
+        general_chosen = NULL;
+        clear_shining();
+    }
+    Cell *cur = &Hexes[where.fi][where.se];
+    if (cur -> shined == 0)
+    {
+        general_chosen = NULL;
+        clear_shining();
+    } else
+    {
+        general_chosen -> fin_x = where.fi;
+        general_chosen -> fin_y = where.se;
+
+        int fin_x = general_chosen -> fin_x, fin_y = general_chosen -> fin_y;
+        int x = general_chosen -> x, y = general_chosen -> y;
+
+        Hexes[fin_x][fin_y].general = Hexes[x][y].general;
+        Hexes[x][y].general = NULL;
+
+        general_chosen -> x = where.fi;
+        general_chosen -> y = where.se;
+
+
+        general_chosen -> cur_move.pb(go_to_cell[mp(fin_x, fin_y)].fi);
+        if (go_to_cell[mp(fin_x, fin_y)].se != 0)
+            general_chosen -> cur_move.pb(go_to_cell[mp(fin_x, fin_y)].se);
+
+
+        general_chosen -> turns_left -= Hexes[fin_x][fin_y].turn_waste + Hexes[fin_x][fin_y].water_waste;
+        general_chosen -> water_moving += Hexes[fin_x][fin_y].water_waste;
+    }
+}
+
 void mouse_gen(int button, int state)
 {
     if (general_chosen != NULL && !general_chosen -> go.empty())

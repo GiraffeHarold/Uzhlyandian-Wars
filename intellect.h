@@ -9,7 +9,8 @@
 
     void do_intellectual_move(int);
     bool canGo(int, int, int);
-    void do_intellectual_move_with_general(int);
+    bool do_intellectual_move_with_general(int);
+    bool do_intellectual_move_with_general_from_file(int);
     int priority(int, int, int);
     pii getBestCell(int);
     pii getAlmostBestCell(int);

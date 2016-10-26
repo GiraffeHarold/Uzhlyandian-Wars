@@ -258,7 +258,10 @@ void play_a_turn_from_file()
         answer.close();
     } else
     {
-        do_intellectual_move_with_general(chosen_country[our_color]);
+        bool d = do_intellectual_move_with_general_from_file(chosen_country[our_color]);
+        while (!d)
+            d = do_intellectual_move_with_general_from_file(chosen_country[our_color]);
+
         /*log.close();
 
         ifstream from_log("log.txt");
@@ -275,11 +278,19 @@ void play_a_turn_from_file()
         log.open("log.txt", ios :: app);*/
 
         string s;
+        buf.close();
         ifstream fin;
+        fin.open("buf.txt");
         remove("TUI.dat");
         ofstream answer;
         answer.open("TUI.dat", ios :: app);
-        answer << buf.rdbuf();
+        char c;
+        c = fin.get();
+        while (fin.good())
+        {
+            answer << c;
+            c = fin.get();
+        }
         in_main_menu = false;
         int q = 0;
         try_move_cam(q, 0, curl, curr, curd, curu);
