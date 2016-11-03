@@ -7,6 +7,7 @@
 #include "map_generator.h"
 #include "end_game.h"
 #include "loading_game.h"
+#include "hard_intellect.h"
 
 int last_menu;
 int last_check;
@@ -284,6 +285,7 @@ void mouse_load_menu(int state)
         if (menu["play_dermo"].pressed)
         {
             menu["play_dermo"].pressed=false;
+            ourSquads.clear();
             play_a_turn_from_file();
             //exit(0);
         }
@@ -323,6 +325,17 @@ void mouse_load_menu(int state)
             load_game(res);
             in_main_menu = 0;
             init_game_now = 0;
+            ourSquads.clear();
+            if (player[1] == PC)
+                for (int i=0; i<N; i++)
+                    for (int j=0; j<M; j++)
+                    {
+                        if (Hexes[i][j].general && Hexes[i][j].general -> color == chosen_country[1])
+                        {
+                            ourSquads.push_back(new Squad(BUILDER));
+                            ourSquads.back() -> add(Hexes[i][j].general);
+                        }
+                    }
             try_move_cam(state,0,curl,curr,curd,curu);
             all_check_clear();
         }
@@ -546,6 +559,7 @@ void mouse_settings(int state)
         }
 
         if (last_check==7)
+        if (!menu["player_vs_pc"].pressed)
         if (menu["game_with_features"].on_all_click())
         {
             menu["game_with_features"].all_click();
@@ -738,6 +752,10 @@ void mouse_check_country(int state)
             ok=true;
             menu[last_checked1[3]].pressed=true;
         }
+
+        if (menu["player_vs_pc"].pressed)
+            menu["game_with_features"].pressed=false;
+
         if (!ok)
         {
             if (menu["player_vs_player"].pressed) last_checked1[3]="player_vs_player";
@@ -833,6 +851,12 @@ void start_play_game()
     if (menu["player_vs_player"].pressed) player[1] = HUMAN;
     if (menu["player_vs_pc"].pressed) player[1] = PC;
     player[0] = HUMAN;
+
+
+    cnt_killed = 0;
+//    cout << "Players: " << player[0] << " " << player[1] << "\n";
+    cur_turn = 0;
+    log.clear();
 
     if(menu["but1"].pressed) Mode = 1;
     else if(menu["but2"].pressed) Mode = 2;
@@ -1005,6 +1029,19 @@ void mouse_pause_load_menu(int state)
             in_main_menu = 0;
             pause = 0;
             init_game_now = 0;
+            ourSquads.clear();
+            if (player[1] == PC)
+                for (int i=0; i<N; i++)
+                    for (int j=0; j<M; j++)
+                    {
+                        if (ourSquads.empty())
+                            ourSquads.push_back(new Squad(DEFENCE));
+                        if (Hexes[i][j].general && Hexes[i][j].general -> color == chosen_country[1])
+                        {
+                            ourSquads.push_back(new Squad(BUILDER));
+                            ourSquads.back() -> add(Hexes[i][j].general);
+                        }
+                    }
             all_check_clear();
             try_move_cam(state,0,curl,curr,curd,curu);
         }

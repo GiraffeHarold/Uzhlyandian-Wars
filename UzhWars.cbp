@@ -58,6 +58,7 @@
 		<Unit filename="basic_classes.h" />
 		<Unit filename="controller.cpp" />
 		<Unit filename="controller.h" />
+		<Unit filename="debug.h" />
 		<Unit filename="draw_menu.cpp" />
 		<Unit filename="draw_menu.h" />
 		<Unit filename="drawing.cpp" />

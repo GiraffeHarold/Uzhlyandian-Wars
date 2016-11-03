@@ -30,6 +30,8 @@
         string name;
         GLfloat add_x, add_y;
         Sprite sprite;
+        Sprite killed;
+        bool is_killed;
         Country color;
 
         int water_moving;
@@ -44,6 +46,7 @@
         General(int, int x, int y, string name,int color,int turns_left,int);
     };
 
+    extern int cnt_killed;
     extern General *general_chosen;
 
     bool operator <(const General&, const General&);

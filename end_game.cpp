@@ -5,6 +5,8 @@
 #include "draw_menu.h"
 #include "loading_game.h"
 #include "hard_intellect.h"
+#include "debug.h"
+#include "controller.h"
 
 int not_inited_end = 1, pressed = 0;
 bool surrendered[2];
@@ -202,28 +204,52 @@ void mouse_end(int state)
         if (back_to_main.pressed)
         {
             back_to_main.pressed=false;
+//            cout << "    1\n";
             game_ending_menu = false;
+//            cout << "    2\n";
             in_main_menu = true;
+//            cout << "    3\n";
             Hexes.clear();
+//            cout << "    4\n";
             player_general[0].clear();
+//            cout << "    5\n";
             player_general[1].clear();
+//            cout << "    6\n";
             cur_turn = 0;
+//            cout << "    7\n";
             Turns = 0;
+//            cout << "    8\n";
             R = 100;
+//            cout << "    9\n";
             for (int i=0; i<10; i++)
                 last[i] = "";
+
+//            cout << "    10\n";
             general_chosen = NULL;
+//            cout << "    11\n";
             just_moved = 0;
+//            cout << "    12\n";
             general_moving_left = 0;
+//            cout << "    13\n";
             type_of_menu = "Start_menu";
+//            cout << "    14\n";
             mouse_gen_func = 0;
+//            cout << "    15\n";
             mouse_not_gen_func = 0;
+//            cout << "    16\n";
             surrendered[0] = 0;
+//            cout << "    17\n";
             surrendered[1] = 0;
+//            cout << "    18\n";
             ourSquads.clear();
+//            cout << "    19\n";
             for (int i=0; i<N; i++)
                 for (int j=0; j<M; j++)
                     chosen_to_build[i][j] = 0;
+//            cout << "    20\n";
+            set_fort_now = false;
+            Display();
+            glutTimerFunc(1, timer, 1);
         }
     }
     if (state==GLUT_DOWN)

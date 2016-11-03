@@ -51,6 +51,7 @@
     extern int last_dermo;
     extern bool surrendered[2];
     extern vector<pair<int,int>> vec1;
+    extern map<string,texture> killed_array;
 
     struct third_regime_turn
     {

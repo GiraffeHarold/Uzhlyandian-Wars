@@ -268,8 +268,93 @@ void LoadAll()
     Load(tex, "generals\\England\\Georg_3.png");
     general_sprite[name[5][3]] = tex;
 
-    Load(tex, "generals\\Russia\\Partizan.png");
+    Load(tex, "generals\\Russia\\partizan.png");
     general_sprite["Partizan"] = tex;
+
+    ///sukotay bleat 3:20
+    ///
+
+    //name[0].pb("Napoleon_Bonapart");
+    Load(tex, "generals\\France\\Napoleon_killed.png");
+    killed_array[name[0][0]] = tex;
+    //name[0].pb("Karl_the_Great");
+    Load(tex, "generals\\France\\Karl the Great_killed.png");
+    killed_array[name[0][1]] = tex;
+    //name[0].pb("Francisk_II");
+    Load(tex, "generals\\France\\Francisk_killed.png");
+    killed_array[name[0][2]] = tex;
+    //name[0].pb("Capet");
+    Load(tex, "generals\\France\\Capet_killed.png");
+    killed_array[name[0][3]] = tex;
+
+    //name[1].pb("Otto_fon_Bismark");
+    //Load(tex, "generals\\Germany\\Otto fon Bismark_killed.png");
+    //killed_array[name[1][0]] = tex;
+    //name[1].pb("Fridrich_Barbarossa");
+    //Load(tex, "generals\\Germany\\Barbarosa_killed.png");
+    //killed_array[name[1][1]] = tex;
+    //name[1].pb("Adolf_Hitler");
+    //Load(tex, "generals\\Germany\\Hitler_killed.png");
+    //killed_array[name[1][2]] = tex;
+    //name[1].pb("Nicholas");
+    //Load(tex, "generals\\Germany\\nikolas_killed.png");
+    //killed_array[name[1][3]] = tex;
+
+    //name[2].pb("Bohdan_Hmelnitskiy");
+    Load(tex, "generals\\Ukraine\\Hmelnitskiy_killed.png");
+    killed_array[name[2][0]] = tex;
+    //name[2].pb("Volodymyr_Velykiy");
+    Load(tex, "generals\\Ukraine\\Volodymyr_killed.png");
+    killed_array[name[2][1]] = tex;
+    //name[2].pb("Yaroslav_Mudriy");
+    Load(tex, "generals\\Ukraine\\Yaroslav_killed.png");
+    killed_array[name[2][2]] = tex;
+    //name[2].pb("Ivan_Mazepa");
+    Load(tex, "generals\\Ukraine\\Mazepa_killed.png");
+    killed_array[name[2][3]] = tex;
+
+    //name[3].pb("Iosif_Stalin");
+    Load(tex, "generals\\Russia\\Stalin_killed.png");
+    killed_array[name[3][0]] = tex;
+    //name[3].pb("Katerina_II");
+    Load(tex, "generals\\Russia\\Katerina_killed.png");
+    killed_array[name[3][1]] = tex;
+    //name[3].pb("Petr_I");
+    Load(tex, "generals\\Russia\\Petr_killed.png");
+    killed_array[name[3][2]] = tex;
+    //name[3].pb("Nickolas_II");
+    Load(tex, "generals\\Russia\\nicholas_killed.png");
+    killed_array[name[3][3]] = tex;
+
+    //name[4].pb("Avraam_Linkoln");
+    Load(tex, "generals\\USA\\Linkoln_killed.png");
+    killed_array[name[4][0]] = tex;
+    //name[4].pb("Franklin_Roosevelt");
+    Load(tex, "generals\\USA\\Ruzveld_killed.png");
+    killed_array[name[4][1]] = tex;
+    //name[4].pb("George_Washington");
+    Load(tex, "generals\\USA\\Washington_killed.png");
+    killed_array[name[4][2]] = tex;
+    //name[4].pb("Taylor");
+    Load(tex, "generals\\USA\\taylore_killed.png");
+    killed_array[name[4][3]] = tex;
+
+    //name[5].pb("Elizabeth_II");
+    Load(tex, "generals\\England\\Elizabeth_killed.png");
+    killed_array[name[5][0]] = tex;
+    //name[5].pb("Richard_Lionheart");
+    Load(tex, "generals\\England\\Richard_killed.png");
+    killed_array[name[5][1]] = tex;
+    //name[5].pb("Karl");
+    Load(tex, "generals\\England\\karl_killed.png");
+    killed_array[name[5][2]] = tex;
+    //name[5].pb("George_III");
+    Load(tex, "generals\\England\\Georg_3_killed.png");
+    killed_array[name[5][3]] = tex;
+
+    Load(tex, "generals\\Russia\\partizan_killed.png");
+    killed_array["Partizan"] = tex;
+    ///
 
     LoadCountries();
 

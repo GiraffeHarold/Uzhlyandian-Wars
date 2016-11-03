@@ -149,7 +149,7 @@ bool Middle_third(int color)
                 Ranks.pb(mp(priority_for_third(i, j, color), mp(i, j)));
             }
 
-    if(Ranks.empty()) {cerr << "bug with shining";return false;}
+//    if(Ranks.empty()) {cerr << "bug with shining";return false;}
 
     pii xy = min_element(Ranks.begin(), Ranks.end())->se;
 
@@ -275,11 +275,12 @@ bool Easy_third(int color)
                 Ranks.pb(mp(priority(i, j, color), mp(i, j)));
             }
 
-    if(Ranks.empty()) {cerr << "bug with shining";return false;}
+//    if(Ranks.empty()) {cerr << "bug with shining";return false;}
 
     pii xy = min_element(Ranks.begin(), Ranks.end())->se;
 
-    cur_third_turn = third_regime_turn(general_for_turn, xy.fi, xy.se, false);
+    bool is_set_fort = (dst(general_for_turn->x,general_for_turn->y, xy.fi,xy.se) < 2 ? rand() % 3 : 0);
+    cur_third_turn = third_regime_turn(general_for_turn, xy.fi, xy.se, is_set_fort);
 
     return true;
 
@@ -290,18 +291,60 @@ void init_new_general(General *now)
 //    cerr << "\n\n\n\n                  " << cur_turn/2 << " TURN\n";
     if (ourSquads.empty())
         ourSquads.push_back(new Squad(DEFENCE));
-    ourSquads[0] -> members.push_back(now);
+    ourSquads[0] -> add(now);
     init_distance(now -> color);
+    /*ourSquads.push_back(new Squad(BUILDER));
+    ourSquads.back() -> add(now);
+    init_distance(now -> color);*/
 }
 
 bool goodThird(int color)
 {
+    init_distance(color);
     for (auto q : ourSquads)
         if (q -> moving < q -> size())
         {
             q -> move();
             cur_third_turn = moveNow.back();
             return 1;
+        }
+
+//    cout << "Pushed squads on turn: " << cur_turn/2 << "\n";
+    for (int i=0; i<N; i++)
+        for (int j=0; j<M; j++)
+        {
+            if (Hexes[i][j].town && Hexes[i][j].general && Hexes[i][j].general -> turns_left > 0)
+                {
+                    general_chosen = Hexes[i][j].general;
+                    general_chosen -> clicked();
+//                    cout << general_chosen -> turns_left << "    !!!!!!!!!\n";
+                    for (int ii=0; ii<N; ii++)
+                        for (int jj=0; jj<M; jj++)
+                            if (Hexes[ii][jj].shined && Hexes[ii][jj].general == NULL)
+                            {
+//                                cout << ii << " " << jj << "\n";
+                                createMove(general_chosen, {ii, jj}, 0);
+                                cur_third_turn = moveNow.back();
+                                return 1;
+                            }
+                }
+            if (Hexes[i][j].town && Hexes[i][j].general)
+                for (int ii=0; ii<N; ii++)
+                    for (int jj=0; jj<M; jj++)
+                    {
+                        if (Hexes[ii][jj].general && Hexes[ii][jj].general -> color == color && Hexes[ii][jj].general -> turns_left && can_set(Hexes[ii][jj].general, ii, jj))
+                        {
+//                            cout << ii << " " << jj << " " << Hexes[ii][jj].general -> color << "\n";
+                            createMove(Hexes[ii][jj].general, {ii, jj}, 1);
+                            cur_third_turn = moveNow.back();
+                            return 1;
+                        }
+                    }
+            if (Hexes[i][j].town && Hexes[i][j].general)
+            {
+                surrender();
+                return 0;
+            }
         }
     return 0;
 }

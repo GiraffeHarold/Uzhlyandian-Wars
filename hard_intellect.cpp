@@ -9,7 +9,7 @@ const int inf = 1e9;
 const ld priority_epsilon = 0.0;
 vector <Squad*> ourSquads;
 map <General*, Squad*> whatSquad;
-ofstream debugger("chosen_cells.txt");
+ofstream debugger("chosen_cells.txt"), debug_in_train;
 
 void init_distance(int color)
 {
@@ -86,13 +86,13 @@ void createMove(General *now, pii where, bool set_)
         && can_set(now, x, y)
         && set_) can = 1;
     moveNow.push_back(third_regime_turn(now, x, y, can));
-    cerr << " NEW MOVE CREATED "  << now -> x << " " << now -> y << " -> " << x << " " << y << " setting fort: " << can << "\n";
+    cout << " NEW MOVE CREATED "  << now -> x << " " << now -> y << " -> " << x << " " << y << " setting fort: " << can << "\n";
 }
 
 ld calc_attack_power(General *now, int cx, int cy)
 {
     int x = now -> x, y = now -> y;
-    cerr << "         calcing attack power from " << x << " " << y << "\n";
+//    cerr << "         calcing attack power from " << x << " " << y << "\n";
     queue <pii> q;
     while (!q.empty())
 
@@ -120,7 +120,7 @@ ld calc_attack_power(General *now, int cx, int cy)
         }
     }
     if (dist1[cx][cy] == inf) return 0;
-    cerr << "             distance " << dist1[cx][cy] << "\n";
+//    cerr << "             distance " << dist1[cx][cy] << "\n";
     vector <ld> ranks(0);
     for (int i=0; i<N; i++)
         for (int j=0; j<M; j++)
@@ -200,15 +200,15 @@ ld under_our_defence(int x, int y)
 
 ld calc_priority_to_build(General* me, int x, int y)
 {
-    cerr << "  calcing for " << x << " " << y << "\n";
+//    cerr << "  calcing for " << x << " " << y << "\n";
     ld penalty = 0;
-    cerr << "   can we set here " << can_set(me, x, y)  << "\n";
+//    cerr << "   can we set here " << can_set(me, x, y)  << "\n";
     if (!can_set(me, x, y) && !Hexes[x][y].town) return -inf/10;
     else if (Hexes[x][y].town) return -inf;
     penalty += under_attack(x, y) * (cur_turn % 2 ? -1 : 1);
-    cerr << "     calced under attack\n";
-    penalty -= under_our_defence(x, y);
-    cerr << "     calced under defence\n";
+//    cerr << "     calced under attack\n";
+//    penalty -= under_our_defence(x, y);
+//    cerr << "     calced under defence\n";
     ld ans = 17.7 * (Hexes[x][y].color != chosen_country[cur_turn%2]);
 
     for (auto w : moves[x%2])
@@ -219,9 +219,9 @@ ld calc_priority_to_build(General* me, int x, int y)
         koeff += 12.4 * (Hexes[nx][ny].color != chosen_country[cur_turn%2]);
         koeff += 6.5 * (Hexes[nx][ny].relief != EMPTY);
         koeff += 6.5 * (Hexes[nx][ny].fort != NULL);
-        koeff += 1500 * (me -> id < 2 && Hexes[nx][ny].town != NULL && Hexes[nx][ny].color != me -> color);
-        koeff -= 40 * (chosen_to_build[nx][ny]);
-
+        koeff += 150 * (me -> id < 2 && Hexes[nx][ny].town != NULL && Hexes[nx][ny].color != me -> color);
+        koeff -= 60 * (chosen_to_build[nx][ny]);
+        koeff += 12 * (Hexes[nx][ny].general != NULL) * ((Hexes[nx][ny].general != NULL && Hexes[nx][ny].general -> color == me -> color) ? -1 : 1);
         for (auto ww : moves[nx%2])
         {
             int nnx = nx + ww.fi, nny = ny + ww.se;
@@ -229,8 +229,10 @@ ld calc_priority_to_build(General* me, int x, int y)
             ld koeff = 0;
             koeff += 1.4 * (Hexes[nnx][nny].color != chosen_country[cur_turn%2]);
             koeff -= 25 * (chosen_to_build[nnx][nny]);
+            koeff += 5 * (Hexes[nx][ny].general != NULL) * ((Hexes[nx][ny].general != NULL && Hexes[nx][ny].general -> color == me -> color) ? -1 : 1);
         }
         ans += koeff * 0.5;
+
     }
 
     ld added = 0;
@@ -243,7 +245,7 @@ ld calc_priority_to_build(General* me, int x, int y)
         }
     added -= cur_turn/2 - me -> id;
     added *= 15;
-    cerr << "       calced all " << ans - added - penalty << "\n";
+//    cerr << "       calced all " << ans - added - penalty << "\n";
     return ans - penalty;
 }
 
@@ -257,7 +259,7 @@ ld calc_attack_prior(General *me, int x, int y)
         int nx = x + w.fi, ny = y + w.se;
         if (nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
         ans += Hexes[x][y].general != NULL;
-        ans += 0.3 * (Hexes[x][y].relief == MOUNTAIN);
+        ans += 13 * (Hexes[x][y].relief == MOUNTAIN);
     }
     return ans;
 
@@ -265,7 +267,7 @@ ld calc_attack_prior(General *me, int x, int y)
 
 void bfs(Squad *cur_squad, General *now)
 {
-    cerr << "We are in BFS\n";
+//    cerr << "We are in BFS\n";
     int x = now -> x, y = now -> y;
     queue <pii> q;
     while (!q.empty())
@@ -275,18 +277,18 @@ void bfs(Squad *cur_squad, General *now)
             dist0[i][j] = inf, pred0[i][j] = {-1, -1};
     dist0[x][y] = 0;
     q.push(mp(x, y));
-    cerr << "We inited queue\n";
+//    cerr << "We inited queue\n";
     while (!q.empty())
     {
         pii current_queue_element = q.front();
         q.pop();
         int x = current_queue_element.fi, y = current_queue_element.se;
-        cerr << x << " " << y << "\n";
+//        cerr << x << " " << y << "\n";
         for (auto w : moves[x%2])
         {
             int nx = x + w.fi, ny = y + w.se;
             if (nx < 0 || nx >= N || ny < 0 || ny >= M) continue;
-            cerr << "    " << nx << " " << ny << "\n";
+//            cerr << "    " << nx << " " << ny << "\n";
             if (Hexes[nx][ny].relief == MOUNTAIN
                 || Hexes[nx][ny].town != NULL
                 || (Hexes[nx][ny].general != NULL) ) continue;
@@ -296,39 +298,39 @@ void bfs(Squad *cur_squad, General *now)
                 q.push({nx, ny});
         }
     }
-    cerr << "BFS ended\n";
+//    cerr << "BFS ended\n";
     int tx = cur_squad -> build_here.fi, ty = cur_squad -> build_here.se;
     if (tx != -1
-        && (rand()%1 == 0 || !can_set(now, tx, ty)));
+        && (rand()%2 == 0 || !can_set(now, tx, ty)));
         chosen_to_build[tx][ty] = 0, tx = -1, ty = -1;
     vector<pair<ld, pii> > Rank(0), goodRank(0);
     pii choose = {-1, -1};
-    cerr << "cleared_chosen_if_needed\n";
+//    cerr << "cleared_chosen_if_needed\n";
     if (tx == -1)
         {
-            cerr << "finding_new_chosen\n";
+//            cerr << "finding_new_chosen\n";
             for (int i=0; i<N; i++)
                 for (int j=0; j<M; j++)
                     if (dist0[i][j] != inf) Rank.push_back({(current == BUILDER?calc_priority_to_build(now, i, j):calc_attack_prior(now, i, j)), {i, j} });
-            cerr << "ranks are done\n";
+//            cerr << "ranks are done\n";
             sort(Rank.begin(), Rank.end());
             reverse(Rank.begin(), Rank.end());
             for (int i=0; i<int(Rank.size()) && goodRank.size() < 3; i++)
             {
                 int x = Rank[i].se.fi, y = Rank[i].se.se;
-                cerr << x << " " << y << " " << (dist0[x][y] + 2) / 2 << " " << Rank[i].fi << "\n";
+//                cerr << x << " " << y << " " << (dist0[x][y] + 2) / 2 << " " << Rank[i].fi << "\n";
                 if ((dist0[x][y] + 2)/2 <= Turns - cur_turn / 2 && !chosen_to_build[x][y]) goodRank.push_back(Rank[i]);
             }
-            cerr << "goodRanks are done\n";
+//            cerr << "goodRanks are done " << goodRank.size() << "\n";
             if (goodRank.size() == 3)
             {
-                cerr << " size is 3 \n";
+//                cerr << " size is 3 \n";
                 int diff = goodRank[0].fi - goodRank[1].fi;
-                cerr << "   diff " << diff << "\n";
+//                cerr << "   diff " << diff << "\n";
                 if (diff > priority_epsilon)
                     choose = goodRank[0].se;
                 diff = rand()%11;
-                cerr << "   random " << diff << "\n";
+//                cerr << "   random " << diff << "\n";
                 if (choose.fi == -1)
                 {
                     if (diff < 7)
@@ -353,11 +355,14 @@ void bfs(Squad *cur_squad, General *now)
                         choose = goodRank[1].se;
                 }
                cur_squad -> build_here = choose;
-            } else cur_squad -> build_here = goodRank[0].se;
+            }
+            else if (goodRank.size())
+                cur_squad -> build_here = goodRank[0].se;
+            else return;
         }
     general_chosen -> clicked();
     pii pos = cur_squad -> build_here;
-    cerr << "   current pos " << pos.fi << " " << pos.se << "\n";
+//    cerr << "   current pos " << pos.fi << " " << pos.se << "\n";
     chosen_to_build[pos.fi][pos.se] = 1;
     if (pos.fi == now -> x && pos.se == now -> y)
     {
@@ -366,7 +371,7 @@ void bfs(Squad *cur_squad, General *now)
     }
     while (dist0[pos.fi][pos.se] > 2)
     {
-        cerr << "   current pos " << pos.fi << " " << pos.se << "\n";
+//        cerr << "   current pos " << pos.fi << " " << pos.se << "\n";
         pii next = pred0[pos.fi][pos.se];
         pos = next;
     }
@@ -389,11 +394,20 @@ void bfs(Squad *cur_squad, General *now)
         }
     }
     createMove(now, pos, (Turns - cur_turn/2 <= 1));
-    cerr << "created move\n";
+//    cerr << "created move\n";
 }
 
 void Squad :: move_builder()
 {
+    again1:
+        for (int i=0; i<size(); i++)
+        {
+            if (members[i] -> x == -1)
+            {
+                members.erase(i + members.begin());
+                goto again1;
+            }
+        }
     if (members.empty()) return;
     init_distance(chosen_country[(cur_turn+1) % 2]);
 
@@ -405,18 +419,26 @@ void Squad :: move_builder()
         convert(ATTACK);
     } else init_distance(chosen_country[cur_turn % 2]);
     bfs(this, general_chosen);
-    debugger << "Turn #" << cur_turn/2 << "   " << general_chosen -> x << " " << general_chosen -> y << " -> " << build_here.fi << " " << build_here.se << "\n";
     moving++;
 }
 
 void Squad :: move_attack()
 {
+  again2:
+    for (int i=0; i<size(); i++)
+    {
+        if (members[i] -> x == -1)
+        {
+            members.erase(i + members.begin());
+            goto again2;
+        }
+    }
+
     if (members.empty()) return;
     init_distance(chosen_country[(cur_turn+1) % 2]);
     current = ATTACK;
     general_chosen = members[moving];
     bfs(this, general_chosen);
-    debugger << "Turn #" << cur_turn/2 << "   " << general_chosen -> x << " " << general_chosen -> y << " -> " << build_here.fi << " " << build_here.se << "\n";
     moving++;
 
 }
@@ -428,13 +450,16 @@ void Squad :: convert(int new_type)
 
 int cnt_empty(General *me)
 {
+
     int ans = 0;
     int x = me -> x, y = me -> y;
     for (auto w : moves[x % 2])
     {
         int nx = x + w.fi, ny = y + w.se;
+
         if (nx < 0 || nx >= N || ny < 0 || ny >= M)
             continue;
+
         if (Hexes[nx][ny].general && Hexes[nx][ny].general -> color != me -> color)
             continue;
         if (Hexes[nx][ny].general)
@@ -451,17 +476,36 @@ pii last_defender_pos = {-1, -1};
 
 void Squad :: move_defence()
 {
+    again3:
+    for (int i=0; i<size(); i++)
+    {
+        if (members[i] -> x == -1)
+        {
+            members.erase(i + members.begin());
+            goto again3;
+        }
+    }
+
+//    cout << "DEFENDERS: \n";
+//    for (auto w : members)
+//        cout << "        " << w -> x << " " << w -> y << "\n";
+//    cout << "\n";
     init_distance(chosen_country[(cur_turn + 1) % 2]);
     if (members.empty()) return;
     General *last = members[0];
-    if (cnt_empty(last) > 2)
+
+//    cout << "distance_inited ";
+//    cout << cnt_empty(last) << "\n";
+    if (cnt_empty(last) > 2 && !moving)
     {
+//        cout << "!!!\n";
         members.erase(members.begin());
         ourSquads.pb(new Squad(BUILDER));
-        ourSquads.back() -> members.pb(last);
+        ourSquads.back() -> add(last);
         ourSquads.back() -> move();
         return;
     }
+    if (members.empty()) return;
     int x = members[0] -> x, y = members[0] -> y;
     if (!moving)
     {
@@ -476,6 +520,7 @@ void Squad :: move_defence()
             if (Hexes[nx][ny].relief == MOUNTAIN)
                 continue;
             can_now.pb({dist_from_town[nx][ny], {nx, ny} });
+            moving++;
             last_defender_pos = {x, y};
 
         }
@@ -483,16 +528,13 @@ void Squad :: move_defence()
         {
             members.erase(members.begin());
             ourSquads.pb(new Squad(BUILDER));
-            ourSquads.back() -> members.pb(last);
+            ourSquads.back() -> add(last);
             ourSquads.back() -> move();
             return;
         }
-        moving++;
         sort(can_now.begin(), can_now.end());
         int nx = can_now[0].se.fi, ny = can_now[0].se.se;
         createMove(members[0], {nx, ny}, Turns - cur_turn / 2 <= 1);
-        last_defender_pos = {nx, ny};
-
     } else
     {
         createMove(members[moving], last_defender_pos, Turns - cur_turn / 2 <= 1);
@@ -511,3 +553,4 @@ void Squad :: move()
     if (type == BUILDER)
         move_builder();
 }
+

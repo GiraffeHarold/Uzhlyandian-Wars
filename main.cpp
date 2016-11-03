@@ -15,8 +15,9 @@
 #include "pause_menu.h"
 #include "Levels_intellect.h"
 
+map<string,texture> killed_array;
 General *what_general[2][500];
-ofstream log;
+ofstream log("log.txt");
 int player[2];
 int width, height, curl, curr, curd, curu, state = -1, in_main_menu = 1, pause = 0, loading_now = 300;
 int init_game_now = 0;
@@ -116,8 +117,6 @@ void Keyboard(unsigned char key,int x,int y)
 {
     switch (key)
     {
-        case 'q':
-            exit(0);
         case 27:
         {
             if (!in_main_menu&&!surrender_menu)
@@ -206,7 +205,7 @@ void Keyboard(unsigned char key,int x,int y)
                                                     if (Hexes[i+wh.fi][j+wh.se].town==NULL||Hexes[i+wh.fi][j+wh.se].color==GERMANY)
                                                         where.pb(mp(i+wh.fi,j+wh.se));
                                 if (where.empty()) continue;
-                                if (rand()%4!=0) continue;
+                                if (rand()%3!=0) continue;
 
                                 /// And then Fuhrer say:
                                 /// "KILL that whore".
@@ -217,7 +216,9 @@ void Keyboard(unsigned char key,int x,int y)
 
                                 pii what=where[rand()%int(where.size())];
                                 player_general[cur_turn%2].erase(Hexes[what.fi][what.se].general);
-                                Hexes[what.fi][what.se].general=NULL;
+                                Hexes[what.fi][what.se].general -> is_killed=true;
+                                cnt_killed = 300;
+                                //Hexes[what.fi][what.se].general=NULL;
                             }
                     }
 
@@ -295,7 +296,7 @@ void Keyboard(unsigned char key,int x,int y)
             {
                 if (context_menu -> active_fort)
                 {
-                    log << context_menu -> x_cell + 1 << " " << context_menu -> y_cell + 1 << "\n";
+                    log << "\n" << context_menu -> x_cell + 1 << " " << context_menu -> y_cell + 1;
                     Hexes[context_menu -> x_cell][context_menu -> y_cell].fort = new Fort(context_menu -> x_cell, context_menu -> y_cell, now);
                     color_town(context_menu -> x_cell, context_menu -> y_cell, now, Hexes);
                     context_menu = NULL;
@@ -330,9 +331,6 @@ void Keyboard(unsigned char key,int x,int y)
             break;
         case 's': /// save_current_game
             save_game();
-            break;
-        case 'l': /// load_last_saved_game
-            load_last_game();
             break;
     }
 }
@@ -452,3 +450,4 @@ int main(int argc, char **argv)
 
     return 0;
 }
+

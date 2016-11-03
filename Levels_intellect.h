@@ -19,4 +19,5 @@
     pii Hard(int, int);
     void init_new_general(General*);
     bool goodThird(int);
+    bool Easy_third(int);
 #endif // LEVELS_INTELLECT_H_INCLUDED

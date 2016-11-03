@@ -82,7 +82,6 @@ void timer(int val)
     if (!in_main_menu && !demo && !just_moved && !(general_chosen != NULL && !general_chosen -> go.empty()))
     {
 //        cerr << Mode << " ";
-//        cerr << cur_turn << " " << player[0] << " " << player[1] << "\n";
         if (Mode != 3)
         {
 
@@ -99,7 +98,7 @@ void timer(int val)
             if (player[cur_turn%2] == HUMAN)
             {
                 control_general(chosen_country[cur_turn%2]);
-            } else
+            } else if (cnt_killed<=0)
             {
                 mouse_gen_func = false;
                 do_intellectual_move_with_general(chosen_country[cur_turn%2]);
@@ -139,6 +138,7 @@ void set_fort()
         log << " -1";
 //        cerr << "logged\n";
         Hexes[x][y].general = NULL;
+        *general_chosen = *new General(-1, -1, -1, "", -1, -1, -1);
         general_chosen = NULL;
         chosen_to_build[x][y] = 0;
         clear_shining();
@@ -164,7 +164,7 @@ void do_context(int where, vector<vector <Cell> >& Hexes)
     if (where == -1) context_menu = NULL, clear_shining();
     if (where == 1 && context_menu -> active_fort)
     {
-        log << context_menu -> x_cell + 1 << " " << context_menu -> y_cell + 1 << "\n";
+        log << "\n" << context_menu -> x_cell + 1 << " " << context_menu -> y_cell + 1;
         Hexes[context_menu -> x_cell][context_menu -> y_cell].fort = new Fort(context_menu -> x_cell, context_menu -> y_cell, now);
         color_town(context_menu -> x_cell, context_menu -> y_cell, now, Hexes);
         context_menu = NULL;
@@ -307,6 +307,7 @@ void clear_shining()
 
 void general_move(pair <int, int> where)
 {
+    //cout << "  Moving general " << general_chosen -> x << " " << general_chosen -> y << " to " << where.fi << " " << where.se << "\n";
     if (where.fi == -1)
     {
         general_chosen = NULL;
@@ -389,7 +390,7 @@ void mouse_gen(int button, int state)
             if (state == GLUT_DOWN)
                 _where = get(x, y, Hexes);
             if (state == GLUT_UP && _where.fi != -1 && _where == get(x, y, Hexes))
-                if (Hexes[_where.fi][_where.se].general != NULL && Hexes[_where.fi][_where.se].general -> color == cur_country)
+                if (Hexes[_where.fi][_where.se].general != NULL && Hexes[_where.fi][_where.se].general -> color == cur_country && ! Hexes[_where.fi][_where.se].general->is_killed)
                 {
                     general_chosen = Hexes[_where.fi][_where.se].general;
                     general_chosen -> clicked();

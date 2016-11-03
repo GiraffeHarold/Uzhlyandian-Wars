@@ -8,7 +8,7 @@ GLuint fort_sprite, town_sprite[20][3];
 vector <vector <Cell > > Hexes;
 int used_generals[200];
 map <string, GLuint> general_sprite;
-int N, M, Turns, Mode;
+int N, M, Turns, Mode, cnt_killed;
 
 /// ìåòîä äëÿ ãåíåðàö³¿ íàñòóïíîãî ãåíåðàëà ³ç ñïèñêó
 
@@ -38,7 +38,10 @@ General :: General(int id, Town town)
     this->color = town.color;
     this->name = next_gen(x, y, color) -> name;
     this->sprite = general_sprite[this->name];
+    this->killed=killed_array[this->name];
     this->turns_left = 2;
+    this->killed=0;
+    this->is_killed=false;
 }
 
 General :: General(int id, int x, int y, string name)
@@ -54,6 +57,8 @@ General :: General(int id, int x, int y, string name)
     this->add_x = 0;
     this->add_y = 0;
     this->turns_left = 2;
+    this->killed=killed_array[this->name];
+    this->is_killed=false;
 }
 
 General :: General(int id, int x, int y, string name,int color,int turns_left,int water_moving)
@@ -70,7 +75,8 @@ General :: General(int id, int x, int y, string name,int color,int turns_left,in
     this->sprite = general_sprite[this->name];
     this->turns_left = turns_left;
     this->water_moving = water_moving;
-
+    this->killed=killed_array[this->name];
+    this->is_killed=false;
 }
 
 bool operator < (const General& q, const General& w)

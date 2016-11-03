@@ -24,14 +24,14 @@ General* next_gen(int x, int y, int color)
 bool good_usa(int x, int y)
 {
     if (x < 0 || y < 0 || x >= N || y >= M) return 0;
-    if (Hexes[x][y].general != NULL) return 0;
+    if (Hexes[x][y].general != NULL || (Hexes[x][y].town && Hexes[x][y].town -> color != chosen_country[cur_turn%2])) return 0;
     return 1;
 }
 
 bool good(int x, int y)
 {
     if (x < 0 || y < 0 || x >= N || y >= M) return 0;
-    if (Hexes[x][y].general != NULL || Hexes[x][y].relief == MOUNTAIN) return 0;
+    if (Hexes[x][y].general != NULL || Hexes[x][y].relief == MOUNTAIN || (Hexes[x][y].town && Hexes[x][y].town -> color != chosen_country[cur_turn%2])) return 0;
     return 1;
 }
 
@@ -436,6 +436,7 @@ void log_generals(int who)
     buf.clear();
     buf.open("buf.txt", ios :: app | ios :: in);
 //    cout << buf.good() << " !\n";
+    log << "\n";
     for (auto x : player_general[who])
     {
         log << x -> id;
@@ -452,7 +453,56 @@ void log_generals(int who)
         log << " ";
         buf << " ";
     }
+    if (player[who] == PC) log << "\n";
+    buf.close();
+}
+
+map <General*, bool> used;
+
+void log_generals_file(int who)
+{
+    used.clear();
+    buf.close();
+    buf.clear();
+    buf.open("buf.txt", ios :: app | ios :: in);
+//    cout << buf.good() << " !\n";
     log << "\n";
-    buf << "\n";
+    for (auto x : vecans)
+    {
+        if (used[x]) continue;
+        used[x] = 1;
+        log << x -> id;
+        buf << x -> id;
+        if (x -> cur_move.empty())
+            log << " " << 0,
+            buf << " " << 0;
+        for (auto y : x -> cur_move)
+            log << " " << y,
+            buf << " " << y;
+        if (x -> cur_move.size() == 1 && x -> cur_move[0] > 0)
+            log << " " << 0,
+            buf << " " << 0;
+        log << " ";
+        buf << " ";
+    }
+    for (auto x : player_general[who])
+    {
+        if (used[x]) continue;
+        used[x] = 1;
+        log << x -> id;
+        buf << x -> id;
+        if (x -> cur_move.empty())
+            log << " " << 0,
+            buf << " " << 0;
+        for (auto y : x -> cur_move)
+            log << " " << y,
+            buf << " " << y;
+        if (x -> cur_move.size() == 1 && x -> cur_move[0] > 0)
+            log << " " << 0,
+            buf << " " << 0;
+        log << " ";
+        buf << " ";
+    }
+    if (player[who] == PC) log << "\n";
     buf.close();
 }

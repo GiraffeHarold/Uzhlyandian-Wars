@@ -59,10 +59,21 @@ void draw_big_logotype()
 
 void General :: draw(ld cx, ld cy)
 {
-
+    //if (this->is_killed)
+      //  cout<<"bleat "<<this->killed<<" !\n";
+    if (cnt_killed<0&&is_killed)
+    {
+        is_killed=false;
+        Hexes[x][y].general=NULL;
+        return;
+    }
+    if (is_killed) cnt_killed--;
     //cerr << name << " " << sprite << " " << add_x << " " << add_y <<  " "  << cx << " " << cy << "\n";
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, sprite);
+    texture what=sprite;
+    if (is_killed)
+        what=killed_array[name];
+    glBindTexture(GL_TEXTURE_2D, what);
 
     GLfloat addx = add_x, addy = add_y;
     //cerr << addx << " " << addy << " !\n";

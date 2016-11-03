@@ -8,4 +8,6 @@
     General* next_gen(int, int, int);
     void renew_turns();
     void log_generals(int);
+    void log_generals_file(int);
+
 #endif // GENERALS_H_INCLUDED

@@ -320,9 +320,16 @@ vector< vector< Cell > > generate_map(int size, int type, int relief)
         }
         else if(type ==  CONTINENTS)
         {
+            if(size > SMALL)
+            {
+                for(int i = 0; i < N; i++)
+                    result[i][0].relief = result[i][M - 1].relief = RIVER;
+                for(int i = 0; i < M; i++)
+                    result[0][i].relief = result[N - 1][i].relief = RIVER;
+            }
             int river_y = rand_in_range(max(2, M / 2), min(M - 1, M / 2 + 1));
             for(int i = 0; i < N; i++)
-                for(int j = river_y; j < river_y + 1; j++)
+                for(int j = river_y; j < river_y + 1 + (Mode == 3 ? rand() % max(1,int( M * 0.2)) : 0); j++)
                     result[i][j].relief = RIVER;
         }
         else

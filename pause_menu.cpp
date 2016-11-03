@@ -21,8 +21,12 @@ void get_back_to_game()
 void get_back_to_main_menu()
 {
     game_ending_menu = false;
+    all_check_clear();
     in_main_menu = true;
     Hexes.clear();
+    player[0] = -1;
+    player[1] = -1;
+
     player_general[0].clear();
     player_general[1].clear();
     cur_turn = 0;

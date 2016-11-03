@@ -26,6 +26,8 @@
     };
 
     void init_distance(int);
+    bool can_set(General*, int, int);
+    void createMove(General*, pii, bool);
 
     extern bool chosen_to_build[100][100];
     extern vector <third_regime_turn> moveNow;

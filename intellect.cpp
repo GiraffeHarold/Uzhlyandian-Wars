@@ -15,6 +15,7 @@ third_regime_turn cur_third_turn;
 ofstream deb("general_intellect_debug.txt");
 /// START INTELECT METHODS
 int distOfBfs[100][100];
+vector<General*> vecans;
 bool vis[100][100], set_fort_now = 0;
 queue< pii > q;
 // нвхярйю люяхбс дхярюмж╡и
@@ -268,7 +269,7 @@ bool do_third_regime_turn(int color)
                     clear_shining();
                     if(!have_any_turn) continue;
 
-                    //cout << "FOUND OTHER GENERAL\n";
+//                    //cout << "FOUND OTHER GENERAL\n";
                     general_for_turn = Hexes[i][j].general;
                     goto end_of_operation1;
                 }
@@ -293,7 +294,7 @@ bool do_third_regime_turn(int color)
       //  cout << fixed << setprecision(5) << x << "\n";
 
 
-    if(Ranks.empty()) {cerr << "bug with shining";return false;}
+//    if(Ranks.empty()) {cerr << "bug with shining";return false;}
 
     pii xy = min_element(Ranks.begin(), Ranks.end())->se;
 
@@ -307,10 +308,11 @@ bool do_intellectual_move_with_general(int color)
 {
     bool p;
     if (difficulty == HARD) p = goodThird(color);
-    else p = do_third_regime_turn(color);
-    cout << p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
+    else if (difficulty == EASY) p = Easy_third(color); else p = do_third_regime_turn(color);
+//    cout << "bleat "<<p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
     if (!p)
     {
+//        cout << cur_turn/2 << " ended\n";
         log_generals(cur_turn%2);
         for (int i=0; i<N; i++)
             for (int j=0; j<M; j++)
@@ -325,7 +327,7 @@ bool do_intellectual_move_with_general(int color)
             }
 
         cur_turn++;
-        if (cur_turn != Turns*2)
+        if (cur_turn < Turns*2)
         {
             Hexes[town[cur_turn%2] -> x][town[cur_turn%2] -> y].general = new General(cur_turn/2 + 1, *town[cur_turn%2]);
             player_general[cur_turn%2].insert(Hexes[town[cur_turn%2] -> x][town[cur_turn%2] -> y].general);
@@ -352,10 +354,10 @@ bool do_intellectual_move_with_general_from_file(int color)
     bool p;
     if (difficulty == HARD) p = goodThird(color);
     else p = do_third_regime_turn(color);
-    cout << p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
+//    cout << p << " " << cur_third_turn.x << " " << cur_third_turn.y << " " << cur_third_turn.general -> x << " " << cur_third_turn.general -> y << " " << cur_third_turn.must_set_a_fort << "\n";
     if (!p)
     {
-        log_generals(cur_turn%2);
+        log_generals_file(cur_turn%2);
         for (int i=0; i<N; i++)
             for (int j=0; j<M; j++)
             {
@@ -382,11 +384,18 @@ bool do_intellectual_move_with_general_from_file(int color)
         return 1;
     }
     general_chosen = cur_third_turn.general;
+    vecans.pb(general_chosen);
     general_chosen -> clicked();
     general_move_from_file(mp(cur_third_turn.x, cur_third_turn.y));
     set_fort_now = cur_third_turn.must_set_a_fort;
     if (set_fort_now)
-        general_chosen = cur_third_turn.general;
+    {
+        general_chosen -> cur_move.push_back(-1);
+        Hexes[general_chosen -> x][general_chosen -> y].general = NULL;
+        Hexes[general_chosen -> x][general_chosen -> y].fort = new Fort(general_chosen -> x, general_chosen -> y, general_chosen -> color);
+        color_town(general_chosen -> x, general_chosen -> y, general_chosen -> color, Hexes);
+        general_chosen = NULL;
+    }
     return 0;
 }
 
@@ -411,7 +420,7 @@ void do_intellectual_move(int color)
         return;
     }
     Hexes[q.fi][q.se].fort = new Fort(q.fi, q.se, color);
-    log << q.fi + 1 << " " << q.se + 1 << "\n";
+    log << "\n" << q.fi + 1 << " " << q.se + 1;
 
     last_turn_made = *new Turn;
     last_turn_made.who = cur_turn % 2;
